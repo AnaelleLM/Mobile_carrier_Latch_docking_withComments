@@ -1,6 +1,6 @@
 // MOBILE CARRIER PROJECT
 // Latch Docking
-// Date 11/07/2014
+// Date 22/07/2014
 // Writen by Anaelle LE MENTEC
 
 //Rossifying by Malcolm Mielle
@@ -27,8 +27,8 @@ void setup()
 pinMode(in1Pin, OUTPUT);
 pinMode(in2Pin, OUTPUT);
 pinMode(enablePin, OUTPUT);
-pinMode(switch1Pin, INPUT );
-pinMode(switch2Pin, INPUT );
+pinMode(switch1Pin, INPUT);
+pinMode(switch2Pin, INPUT);
 
   //Switch M12V DC motor on
   initial();
@@ -45,11 +45,11 @@ void messageCb( const std_msgs::Bool& msg){
   digitalWrite(13, HIGH-digitalRead(13));   // blink the led
   
   if (msg.data==true){
-    boolean stateSwitch1 = digitalRead(switch1Pin);
-    boolean stateSwitch2 = digitalRead(switch2Pin);
+    int stateSwitch1 = digitalRead(switch1Pin);
+    int stateSwitch2 = digitalRead(switch2Pin);
   
     //Open arms while there are not in opened position (= switch 1 on)
-    while(!(stateSwitch1 && ! stateSwitch2))
+    while(!(stateSwitch1!=HIGH &&  stateSwitch2!=LOW))
     {
       stateSwitch1 = digitalRead(switch1Pin);
       stateSwitch2 = digitalRead(switch2Pin);
@@ -59,11 +59,11 @@ void messageCb( const std_msgs::Bool& msg){
     }
   }
   else{
-    boolean stateSwitch1 = digitalRead(switch1Pin);
-    boolean stateSwitch2 = digitalRead(switch2Pin);
+    int stateSwitch1 = digitalRead(switch1Pin);
+    int stateSwitch2 = digitalRead(switch2Pin);
   
     //Latch arms while there are not in closed position (= switch 2 on)
-    while(! (!stateSwitch1 && stateSwitch2))
+    while(!(stateSwitch1!=LOW && stateSwitch2!=HIGH))
     {
       stateSwitch1 = digitalRead(switch1Pin);
       stateSwitch2 = digitalRead(switch2Pin);
